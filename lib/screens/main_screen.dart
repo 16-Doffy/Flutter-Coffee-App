@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFC67C4E).withValues(alpha: 0.1)
+              ? const Color(0xFF9A4F16).withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
@@ -135,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
                 Icon(
                   isSelected ? activeIcon : icon,
                   color: isSelected
-                      ? const Color(0xFFC67C4E)
+                      ? const Color(0xFF9A4F16)
                       : const Color(0xFF9E9E9E),
                   size: 24,
                 ),
@@ -177,7 +177,7 @@ class _MainScreenState extends State<MainScreen> {
               Text(
                 label,
                 style: const TextStyle(
-                  color: Color(0xFFC67C4E),
+                  color: Color(0xFF9A4F16),
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),

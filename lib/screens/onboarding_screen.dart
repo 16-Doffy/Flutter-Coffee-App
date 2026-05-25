@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main_screen.dart';
+import 'login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -48,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const MainScreen(),
+            const LoginScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           children: [
                             _buildPage(
                               icon: Icons.coffee_rounded,
-                              title: 'Cafe Shop',
+                              title: 'Third+ Coffee & Tea',
                               subtitle:
                                   'Find the best coffee for you, all you\nneeds coffee',
                             ),
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               color: index == _currentPage
-                                  ? const Color(0xFFC67C4E)
+                                  ? const Color(0xFF9A4F16)
                                   : const Color(0xFFD9D9D9),
                             ),
                           );
@@ -171,7 +171,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                 onPressed: _nextPage,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      const Color(0xFFC67C4E),
+                                      const Color(0xFF9A4F16),
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 32,
@@ -228,7 +228,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  const Color(0xFFC67C4E).withValues(alpha: 0.15),
+                  const Color(0xFF9A4F16).withValues(alpha: 0.15),
                   Colors.transparent,
                 ],
               ),
@@ -242,17 +242,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFC67C4E)
+                      color: const Color(0xFF9A4F16)
                           .withValues(alpha: 0.2),
                       blurRadius: 40,
                       spreadRadius: 10,
                     ),
                   ],
                 ),
-                child: Icon(
-                  icon,
-                  size: 80,
-                  color: const Color(0xFF8B4513),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/logo_third.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

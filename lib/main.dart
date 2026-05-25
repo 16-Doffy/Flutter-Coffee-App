@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/onboarding_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const CafeShopApp());
@@ -17,10 +17,10 @@ class CafeShopApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF5F5F0),
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFC67C4E),
+          seedColor: const Color(0xFF9A4F16),
         ),
       ),
-      home: const OnboardingScreen(),
+      home: const SplashScreen(),
     );
   }
 }

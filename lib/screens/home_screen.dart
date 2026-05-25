@@ -111,42 +111,75 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Hi, Coffee Lover!',
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'Find the best coffee\nfor you',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2D2D2D),
-                height: 1.3,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Good Morning',
+                style: TextStyle(fontSize: 14, color: Colors.grey[500]),
               ),
-            ),
-          ],
-        ),
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFC67C4E).withValues(alpha: 0.15),
-            border: Border.all(
-              color: const Color(0xFFC67C4E).withValues(alpha: 0.3),
-              width: 2,
-            ),
+              const SizedBox(height: 4),
+              const Text(
+                'Coffee Lover',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF2D2D2D),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(Icons.location_on_rounded,
+                      size: 14, color: Colors.grey[500]),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Brew City, BC',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                  ),
+                ],
+              ),
+            ],
           ),
-          child: const Icon(
-            Icons.person_rounded,
-            color: Color(0xFFC67C4E),
-            size: 26,
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.06),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Stack(
+              children: [
+                const Center(
+                  child: Icon(Icons.notifications_outlined,
+                      color: Color(0xFF2D2D2D), size: 22),
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF9A4F16),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -177,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen>
           suffixIcon: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFC67C4E),
+              color: const Color(0xFF9A4F16),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(Icons.search, color: Colors.white, size: 20),
@@ -206,18 +239,18 @@ class _HomeScreenState extends State<HomeScreen>
               padding: const EdgeInsets.symmetric(horizontal: 18),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? const Color(0xFFC67C4E)
+                    ? const Color(0xFF9A4F16)
                     : Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected
-                      ? const Color(0xFFC67C4E)
+                      ? const Color(0xFF9A4F16)
                       : Colors.grey[300]!,
                 ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: const Color(0xFFC67C4E)
+                          color: const Color(0xFF9A4F16)
                               .withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
@@ -287,11 +320,11 @@ class _HomeScreenState extends State<HomeScreen>
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFC67C4E), Color(0xFF8B4513)],
+          colors: [Color(0xFF9A4F16), Color(0xFF8B4513)],
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFC67C4E).withValues(alpha: 0.3),
+            color: const Color(0xFF9A4F16).withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -339,7 +372,15 @@ class _HomeScreenState extends State<HomeScreen>
               shape: BoxShape.circle,
               color: Colors.white.withValues(alpha: 0.15),
             ),
-            child: Icon(icon, size: 45, color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/logo_third.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -358,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen>
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3),
             color: index == _currentBanner
-                ? const Color(0xFFC67C4E)
+                ? const Color(0xFF9A4F16)
                 : const Color(0xFFD9D9D9),
           ),
         );
@@ -476,8 +517,17 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                     ),
-                    Center(
-                      child: Icon(item.icon, color: Colors.white, size: 48),
+                    Positioned.fill(
+                      child: item.imagePath.isNotEmpty
+                          ? ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.vertical(top: Radius.circular(16)),
+                              child: Image.asset(
+                                item.imagePath,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Center(child: Icon(item.icon, color: Colors.white, size: 48)),
                     ),
                     Positioned(
                       top: 8,
@@ -548,7 +598,7 @@ class _HomeScreenState extends State<HomeScreen>
                         '\$${item.price.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFC67C4E),
+                          color: Color(0xFF9A4F16),
                           fontSize: 16,
                         ),
                       ),
@@ -559,7 +609,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('${item.name} added to cart'),
-                              backgroundColor: const Color(0xFFC67C4E),
+                              backgroundColor: const Color(0xFF9A4F16),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -570,7 +620,7 @@ class _HomeScreenState extends State<HomeScreen>
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFC67C4E),
+                            color: const Color(0xFF9A4F16),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(

@@ -154,11 +154,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                     ),
                   ),
                   Center(
-                    child: Icon(
-                      widget.item.icon,
-                      size: 100,
-                      color: Colors.white.withValues(alpha: 0.9),
-                    ),
+                    child: widget.item.imagePath.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(26),
+                            child: Image.asset(
+                              widget.item.imagePath,
+                              width: 230,
+                              height: 210,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Icon(
+                            widget.item.icon,
+                            size: 100,
+                            color: Colors.white.withValues(alpha: 0.9),
+                          ),
                   ),
                 ],
               ),
@@ -297,12 +307,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                 margin: const EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xFFC67C4E)
+                      ? const Color(0xFF9A4F16)
                       : Colors.white,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: isSelected
-                        ? const Color(0xFFC67C4E)
+                        ? const Color(0xFF9A4F16)
                         : Colors.grey[300]!,
                     width: 2,
                   ),
@@ -310,7 +320,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                       ? [
                           BoxShadow(
                             color:
-                                const Color(0xFFC67C4E).withValues(alpha: 0.3),
+                                const Color(0xFF9A4F16).withValues(alpha: 0.3),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -400,7 +410,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                       SnackBar(
                         content: Text(
                             '${widget.item.name} x$_quantity added to cart'),
-                        backgroundColor: const Color(0xFFC67C4E),
+                        backgroundColor: const Color(0xFF9A4F16),
                         behavior: SnackBarBehavior.floating,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -465,7 +475,7 @@ class _AddToCartButtonState extends State<_AddToCartButton>
           widget.onPressed();
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFC67C4E),
+          backgroundColor: const Color(0xFF9A4F16),
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape:

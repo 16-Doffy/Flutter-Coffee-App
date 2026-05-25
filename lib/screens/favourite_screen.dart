@@ -15,6 +15,14 @@ class _FavouriteScreenState extends State<FavouriteScreen>
     with SingleTickerProviderStateMixin {
   final _shop = ShopData.instance;
   late AnimationController _gridController;
+  String _filter = 'All';
+
+  List<CoffeeItem> _getFilteredFavs() {
+    final favItems =
+        allCoffeeItems.where((i) => _shop.isFavourite(i.id)).toList();
+    if (_filter == 'All') return favItems;
+    return favItems.where((i) => i.category == _filter).toList();
+  }
 
   @override
   void initState() {
@@ -44,12 +52,13 @@ class _FavouriteScreenState extends State<FavouriteScreen>
               child: ListenableBuilder(
                 listenable: _shop,
                 builder: (context, _) {
-                  final favItems = allCoffeeItems
+                  final allFavs = allCoffeeItems
                       .where((i) => _shop.isFavourite(i.id))
                       .toList();
-                  if (favItems.isEmpty) {
+                  if (allFavs.isEmpty) {
                     return _buildEmpty();
                   }
+                  final favItems = _getFilteredFavs();
                   return Column(
                     children: [
                       Padding(
@@ -73,7 +82,20 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                           ],
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      _buildFilterChips(),
                       const SizedBox(height: 16),
+                      if (favItems.isEmpty)
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              'No items in this category',
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.grey[400]),
+                            ),
+                          ),
+                        )
+                      else
                       Expanded(
                         child: Padding(
                           padding:
@@ -133,6 +155,55 @@ class _FavouriteScreenState extends State<FavouriteScreen>
           fontWeight: FontWeight.bold,
           color: Color(0xFF2D2D2D),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFilterChips() {
+    final filters = ['All', 'Hot Coffee', 'Drinks', 'Ice Cream', 'Tea'];
+    return SizedBox(
+      height: 36,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        itemCount: filters.length,
+        itemBuilder: (context, index) {
+          final isSelected = _filter == filters[index];
+          return GestureDetector(
+            onTap: () {
+              setState(() => _filter = filters[index]);
+              _gridController.reset();
+              _gridController.forward();
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              margin: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? const Color(0xFF9A4F16)
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(
+                  color: isSelected
+                      ? const Color(0xFF9A4F16)
+                      : Colors.grey[300]!,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  filters[index],
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.grey[600],
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -222,9 +293,17 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                           ),
                         ),
                       ),
-                      Center(
-                        child: Icon(item.icon,
-                            color: Colors.white, size: 42),
+                      Positioned.fill(
+                        child: item.imagePath.isNotEmpty
+                            ? ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.vertical(top: Radius.circular(16)),
+                                child: Image.asset(
+                                  item.imagePath,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Center(child: Icon(item.icon, color: Colors.white, size: 42)),
                       ),
                       Positioned(
                         top: 6,
@@ -288,7 +367,7 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                           '\$${item.price.toStringAsFixed(2)}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFFC67C4E),
+                            color: Color(0xFF9A4F16),
                             fontSize: 15,
                           ),
                         ),
@@ -301,7 +380,7 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                                 content:
                                     Text('${item.name} added to cart'),
                                 backgroundColor:
-                                    const Color(0xFFC67C4E),
+                                    const Color(0xFF9A4F16),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -314,7 +393,7 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFC67C4E),
+                              color: const Color(0xFF9A4F16),
                               borderRadius: BorderRadius.circular(7),
                             ),
                             child: const Icon(
